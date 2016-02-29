@@ -14,7 +14,6 @@ public class AddressBook extends JFrame {
 
     private JList people;
     private JPanel panel1;
-    private JTextField search;
     private JButton createButton;
     private JButton editButton;
     private JButton deleteButton;
@@ -40,7 +39,7 @@ public class AddressBook extends JFrame {
             }
         });
 
-        // TO DO: implement listener to open person's data
+        // TO DO: implement listener to open person's data when selected
         people.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
