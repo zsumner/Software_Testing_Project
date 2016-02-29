@@ -46,6 +46,19 @@ public class AddressBook extends JFrame {
 
             }
         });
+        // TO DO: implement listener to delete the selected person's data
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+                JFrame frame = new JFrame();
+
+                JOptionPane.showConfirmDialog(frame, "Are you sure you want to delete this contact?",
+                        "Confirm Deletion",JOptionPane.WARNING_MESSAGE);
+
+                //TO DO: Delete the selected contact in the list
+            }
+        });
     }
 
     public static void main(String[] args) {
