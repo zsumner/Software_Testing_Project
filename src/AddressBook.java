@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 /**
  * Created by Zak on 2/26/2016.
  */
-public class AddressBookGUI extends JFrame{
+public class AddressBook extends JFrame {
 
 
     private JList people;
@@ -23,7 +23,7 @@ public class AddressBookGUI extends JFrame{
     private JButton sortZAButton;
     private JDialog createClassDialog;
 
-    public AddressBookGUI(){
+    public AddressBook() {
 
 
         createButton.addActionListener(new ActionListener() {
@@ -60,20 +60,20 @@ public class AddressBookGUI extends JFrame{
                 }
             }
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AddressBookGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            Logger.getLogger(AddressBookGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(AddressBookGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(AddressBookGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        // Creation
+        // Frame creation
         JFrame frame = new JFrame("Address Book");
 
         // Frame properties
-        frame.setContentPane(new AddressBookGUI().panel1);
+        frame.setContentPane(new AddressBook().panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
@@ -83,10 +83,23 @@ public class AddressBookGUI extends JFrame{
 
     }
 
-   public void addToList(){
+    // TO DO:
+    public void addToList() {
 
-   }
+    }
 
+    // TO DO:
+    public void sortAZ() {
+
+    }
+
+    // TO DO:
+    public void sortZA() {
+    }
+
+    // TO DO:
+    public void sortZip() {
+    }
 
 
 }
