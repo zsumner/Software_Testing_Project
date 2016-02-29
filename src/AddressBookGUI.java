@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
@@ -13,7 +15,6 @@ public class AddressBookGUI extends JFrame{
     private JList people;
     private JPanel panel1;
     private JTextField search;
-    private JButton searchButton;
     private JButton createButton;
     private JButton editButton;
     private JButton deleteButton;
@@ -24,13 +25,7 @@ public class AddressBookGUI extends JFrame{
 
     public AddressBookGUI(){
 
-        /* TO DO: ADD Search Functionality */
-        search.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
 
-            }
-        });
         createButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -42,6 +37,14 @@ public class AddressBookGUI extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 EditContact editForm = new EditContact();
+            }
+        });
+
+        // TO DO: implement listener to open person's data
+        people.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent listSelectionEvent) {
+
             }
         });
     }
