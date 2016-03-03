@@ -20,6 +20,9 @@ public class AddressBook extends JFrame {
     private JButton sortByZipButton;
     private JButton sortAZButton;
     private JButton sortZAButton;
+    private JScrollBar scrollBar1;
+    private JTextField textField1;
+    private JButton searchButton;
     private JDialog createClassDialog;
 
     public AddressBook() {
