@@ -3,6 +3,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +26,6 @@ public class AddressBook extends JFrame {
     private JButton sortByZipButton;
     private JButton sortAZButton;
     private JButton sortZAButton;
-    private JScrollBar scrollBar1;
     private JTextField textField1;
     private JButton searchButton;
     private JDialog createClassDialog;
@@ -119,6 +124,7 @@ public class AddressBook extends JFrame {
     //A, added test input to list:
     public void addToList() {
         person.add("dick cheney");
+
     }
 
     //A, saves the list to a "saveState.txt" file:
@@ -143,13 +149,8 @@ public class AddressBook extends JFrame {
     public void searchList(){
 
     }
-    //A, this method gets the array valeues at the index given by the searchList method:
+    //A, this method gets the array values at the index given by the searchList method:
     public void getListVal(int idx){
-
-    }
-
-    // TO DO:
-    public void addToList() {
 
     }
 
