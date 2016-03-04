@@ -98,6 +98,56 @@ public class AddressBook extends JFrame {
 
     }
 
+    //A, Generated listmodel to store string data from contacts (only testing names now):
+    DefaultListModel<String> model;
+    ArrayList<String> person = new ArrayList<String>();
+
+    //A, Read the in method comments:
+    private void UpdateJList(){
+        //Initialize model:
+        model = new DefaultListModel<String>();
+
+        //Populate it:
+        for(String p : person){
+            model.addElement(p.toString());
+        }
+        //Set the model for the JList and update GUI:
+        people.setModel(model);
+        people.updateUI();
+    }
+
+    //A, added test input to list:
+    public void addToList() {
+        person.add("dick cheney");
+    }
+
+    //A, saves the list to a "saveState.txt" file:
+    public void saveListStat() throws IOException {
+        FileWriter writer = new FileWriter("saveState.txt");
+        for(String str: person) {
+            writer.write(str);
+        }
+        writer.close();
+    }
+
+    //A, loads the saveState.txt file back into the list:
+    public void loadList() throws FileNotFoundException {
+        Scanner s = new Scanner(new File("saveState.txt"));
+        while (s.hasNext()){
+            person.add(s.nextLine());
+        }
+        s.close();
+    }
+
+    //A, this method searches the array list based on an input string and returns index of entries:
+    public void searchList(){
+
+    }
+    //A, this method gets the array valeues at the index given by the searchList method:
+    public void getListVal(int idx){
+
+    }
+
     // TO DO:
     public void addToList() {
 
