@@ -1,14 +1,15 @@
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.Position;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,7 +17,6 @@ import java.util.logging.Logger;
  * Created by Zak on 2/26/2016.
  */
 public class AddressBook extends JFrame {
-
 
     private JList people;
     private JPanel panel1;
@@ -28,10 +28,23 @@ public class AddressBook extends JFrame {
     private JButton sortZAButton;
     private JTextField textField1;
     private JButton searchButton;
+    private JScrollPane mePane;
+    private JButton refreshListButt;
     private JDialog createClassDialog;
+    private DefaultListModel<String> model;
 
     public AddressBook() {
+        model = new DefaultListModel<String>();
+        model.addElement("fuck this");
 
+        people.setModel(model);
+
+        refreshListButt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                UpdateJList();
+            }
+        });
 
         createButton.addActionListener(new ActionListener() {
             @Override
@@ -47,13 +60,13 @@ public class AddressBook extends JFrame {
             }
         });
 
-        // TO DO: implement listener to open person's data when selected
-        people.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent listSelectionEvent) {
-
-            }
-        });
+//        // TO DO: implement listener to open person's data when selected
+//        people.addListSelectionListener(new ListSelectionListener() {
+//            @Override
+//            public void valueChanged(ListSelectionEvent listSelectionEvent) {
+//
+//            }
+//        });
         // TO DO: implement listener to delete the selected person's data
         deleteButton.addActionListener(new ActionListener() {
             @Override
@@ -85,7 +98,7 @@ public class AddressBook extends JFrame {
             Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
             Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -100,25 +113,22 @@ public class AddressBook extends JFrame {
         frame.setSize(800, 600);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
-
     }
 
     //A, Generated listmodel to store string data from contacts (only testing names now):
-    DefaultListModel<String> model;
     ArrayList<String> person = new ArrayList<String>();
 
     //A, Read the in method comments:
     private void UpdateJList(){
-        //Initialize model:
-        model = new DefaultListModel<String>();
+        addToList();
 
         //Populate it:
         for(String p : person){
             model.addElement(p.toString());
         }
+
         //Set the model for the JList and update GUI:
-        people.setModel(model);
-        people.updateUI();
+        mePane.revalidate();
     }
 
     //A, added test input to list:
@@ -147,8 +157,12 @@ public class AddressBook extends JFrame {
 
     //A, this method searches the array list based on an input string and returns index of entries:
     public void searchList(){
-
+        String searchMe = textField1.getText();
+        int index = people.getNextMatch(searchMe,0, Position.Bias.Forward);
+        if (index != -1)
+            people.setSelectedValue(searchMe,true);
     }
+
     //A, this method gets the array values at the index given by the searchList method:
     public void getListVal(int idx){
 
@@ -156,16 +170,34 @@ public class AddressBook extends JFrame {
 
     // TO DO:
     public void sortAZ() {
-
+        Collections.sort(person);
+        for(String p : person){
+            model.addElement(p.toString());
+        }
+        //Set the model for the JList and update GUI:
+        people.updateUI();
     }
 
     // TO DO:
     public void sortZA() {
+        Collections.reverse(person);
+        for(String p : person){
+            model.addElement(p.toString());
+        }
+        //Set the model for the JList and update GUI:
+        people.updateUI();
     }
 
     // TO DO:
     public void sortZip() {
     }
 
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        people = new JList();
+
+        mePane = new JScrollPane(people);
+    }
 
 }
