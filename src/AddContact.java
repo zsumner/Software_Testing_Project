@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
+import java.util.Formatter;
 import java.util.ArrayList;
 
 /**
@@ -24,6 +26,7 @@ public class AddContact extends JFrame{
     private JButton cancelButton;
     private JButton saveButton;
 
+    private String first, last, address, state, zipCode, phone;
 
 
 
@@ -48,7 +51,45 @@ public class AddContact extends JFrame{
                 contactForm.dispose();
             }
         });
+
+        saveButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                first = firstNameField.getText();
+                last = lastNameField.getText();
+                address = addressField.getText();
+                state = stateSelecter.getSelectedItem().toString();
+                zipCode = zipField.getText();
+                phone = phoneField.getText();
+
+                File file = new File("Contacts.txt");
+                try
+                {
+                    BufferedWriter out = new BufferedWriter(new FileWriter(file));
+                    out.write(String.format("%-15s", first));
+                    out.write(String.format("%-15s", last));
+                    out.write(String.format("%-15s", address));
+                    out.write(String.format("%-15s", state));
+                    out.write(String.format("%-15s", zipCode));
+                    out.write(String.format("%-15s", phone));
+                    out.newLine();
+                    out.close();
+                    contactForm.dispose();
+                }
+                catch (FileNotFoundException e1)
+                {
+                    e1.printStackTrace();
+                }
+                catch (IOException e1)
+                {
+                    e1.printStackTrace();
+                }
+            }
+        });
     }
+
 
 
 
