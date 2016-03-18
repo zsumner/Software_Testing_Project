@@ -25,8 +25,10 @@ public class AddContact extends JFrame{
     private JLabel firstNameLabel;
     private JButton cancelButton;
     private JButton saveButton;
+    private JLabel cityLabel;
+    private JTextField cityField;
 
-    private String first, last, address, state, zipCode, phone;
+    private String first, last, address, city, state, zipCode, phone;
 
 
 
@@ -60,6 +62,7 @@ public class AddContact extends JFrame{
                 first = firstNameField.getText();
                 last = lastNameField.getText();
                 address = addressField.getText();
+                city = cityField.getText();
                 state = stateSelecter.getSelectedItem().toString();
                 zipCode = zipField.getText();
                 phone = phoneField.getText();
@@ -71,11 +74,13 @@ public class AddContact extends JFrame{
                     out.write(String.format("%-15s", first));
                     out.write(String.format("%-15s", last));
                     out.write(String.format("%-15s", address));
+                    out.write(String.format("%-15s", city));
                     out.write(String.format("%-15s", state));
                     out.write(String.format("%-15s", zipCode));
                     out.write(String.format("%-15s", phone));
                     out.newLine();
                     out.close();
+                    //@@@@@@@@@@@@@@@@@@@@@ Add these fields to the JList @@@@@@@@@@@@@@@@@@@@@@@@@@
                     contactForm.dispose();
                 }
                 catch (FileNotFoundException e1)
