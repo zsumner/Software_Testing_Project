@@ -1,7 +1,9 @@
+import org.junit.Before;
 import org.junit.Test;
-import org.omg.SendingContext.RunTime;
 
 import javax.swing.*;
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 /**
@@ -9,17 +11,26 @@ import static org.junit.Assert.*;
  */
 public class AddressBookTest {
 
+    AddressBook addressBook = new AddressBook();
+
     @Test
     public void testAddToList() throws Exception {
         Person person = new Person("bob", "evans", "", "", "", "", "");
-        DefaultListModel list = new DefaultListModel();
+        DefaultListModel<Person> list = new DefaultListModel<Person>();
         list.addElement(person);
         assertEquals(person, list.getElementAt(0));
     }
 
-    @Test(expected = RuntimeException.class)
-    public void testSortAZ(){
-        throw new RuntimeException();
+    @Test
+    public void testSortAZ()
+    {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("I");
+        list.add("A");
+        list.add("B");
+        addressBook.sortAZ(list);
+
+
     }
 
     @Test(expected = RuntimeException.class)

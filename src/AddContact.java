@@ -30,6 +30,7 @@ public class AddContact extends JFrame{
 
     private String first, last, address, city, state, zipCode, phone;
 
+    AddressBook add = new AddressBook();
 
 
     public AddContact(){
@@ -66,6 +67,11 @@ public class AddContact extends JFrame{
                 state = stateSelecter.getSelectedItem().toString();
                 zipCode = zipField.getText();
                 phone = phoneField.getText();
+                city = cityField.getText();
+
+                add.UpdateJList(first, last);
+
+                Person person = new Person(first, last, address, state, city, zipCode, phone);
 
                 File file = new File("Contacts.txt");
                 try
@@ -83,14 +89,11 @@ public class AddContact extends JFrame{
                     //@@@@@@@@@@@@@@@@@@@@@ Add these fields to the JList @@@@@@@@@@@@@@@@@@@@@@@@@@
                     contactForm.dispose();
                 }
-                catch (FileNotFoundException e1)
-                {
-                    e1.printStackTrace();
-                }
                 catch (IOException e1)
                 {
                     e1.printStackTrace();
                 }
+
             }
         });
     }

@@ -1,8 +1,5 @@
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.text.Position;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,7 +15,7 @@ import java.util.logging.Logger;
  */
 public class AddressBook extends JFrame {
 
-    private JList people;
+    private JList<String> people;
     private JPanel panel1;
     private JButton createButton;
     private JButton editButton;
@@ -33,16 +30,18 @@ public class AddressBook extends JFrame {
     private JDialog createClassDialog;
     private DefaultListModel<String> model;
 
-    public AddressBook() {
-        model = new DefaultListModel<String>();
-        model.addElement("fuck this");
+
+    private ArrayList<String> person = new ArrayList<>();
+
+    AddressBook() {
+        model = new DefaultListModel<>();
 
         people.setModel(model);
 
         refreshListButt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                UpdateJList();
+                UpdateJList("Jack", "Sparrow");
             }
         });
 
@@ -80,6 +79,16 @@ public class AddressBook extends JFrame {
                 //TO DO: Delete the selected contact in the list
             }
         });
+
+
+        sortAZButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                sortAZ(person);
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -92,13 +101,7 @@ public class AddressBook extends JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException ex) {
             Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -116,15 +119,14 @@ public class AddressBook extends JFrame {
     }
 
     //A, Generated listmodel to store string data from contacts (only testing names now):
-    ArrayList<String> person = new ArrayList<String>();
 
     //A, Read the in method comments:
-    private void UpdateJList(){
-        addToList();
+    public void UpdateJList(String first, String last){
+        addToList(first, last);
 
         //Populate it:
         for(String p : person){
-            model.addElement(p.toString());
+            model.addElement(p);
         }
 
         //Set the model for the JList and update GUI:
@@ -132,9 +134,8 @@ public class AddressBook extends JFrame {
     }
 
     //A, added test input to list:
-    public void addToList() {
-        person.add("dick cheney");
-
+    private void addToList(String first, String last) {
+        person.add(first + " " + last);
     }
 
     //A, saves the list to a "saveState.txt" file:
@@ -169,10 +170,10 @@ public class AddressBook extends JFrame {
     }
 
     // TO DO:
-    public void sortAZ() {
+    public void sortAZ(ArrayList<String> person) {
         Collections.sort(person);
-        for(String p : person){
-            model.addElement(p.toString());
+        for(String p : this.person){
+            model.addElement(p);
         }
         //Set the model for the JList and update GUI:
         people.updateUI();
@@ -182,7 +183,7 @@ public class AddressBook extends JFrame {
     public void sortZA() {
         Collections.reverse(person);
         for(String p : person){
-            model.addElement(p.toString());
+            model.addElement(p);
         }
         //Set the model for the JList and update GUI:
         people.updateUI();
@@ -195,7 +196,7 @@ public class AddressBook extends JFrame {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        people = new JList();
+        people = new JList<String>();
 
         mePane = new JScrollPane(people);
     }

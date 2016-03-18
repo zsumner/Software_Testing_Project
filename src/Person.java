@@ -2,44 +2,44 @@
  * Created by John Michael on 2/8/2016.
  */
 public class Person {
-    String firstName;
-    String lastName;
-    String address;
-    String city;
-    String state;
-    String zip;
+    static String firstName;
+    static String lastName;
+    static String address;
+    static String city;
+    static String state;
+    static String zip;
+    static String phone;
 
     public Person(String firstName, String lastName, String address, String city, String state, String zip, String phone) {
 
     }
 
-    public String getFirstName() {
+    public static String getFirstName() {
         return firstName;
     }
 
-    public String getLastName() {
+    public static String getLastName() {
         return lastName;
     }
 
-    public String getAddress() {
+    public static String getAddress() {
         return address;
     }
 
-    public String getCity() {
+    public static String getCity() {
         return city;
     }
 
-    public String getState() {
+    public static String getState() {
         return state;
     }
 
-    public String getZip() {
+    public static String getZip() {
         return zip;
     }
 
-    public String getPhone() {
+    public static String getPhone() {
         return phone;
     }
 
-    String phone;
 }
