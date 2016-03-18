@@ -26,30 +26,24 @@ public class AddressBook extends JFrame {
     private JTextField textField1;
     private JButton searchButton;
     private JScrollPane mePane;
-    private JButton refreshListButt;
     private JDialog createClassDialog;
     private DefaultListModel<String> model;
 
 
     private ArrayList<String> person = new ArrayList<>();
 
+
+
     AddressBook() {
+
         model = new DefaultListModel<>();
-
         people.setModel(model);
-
-        refreshListButt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                UpdateJList("Jack", "Sparrow");
-            }
-        });
 
         createButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                AddContact contactForm = new AddContact();
-
+                AddContact contactForm = new AddContact(model, mePane);
+                contactForm.run();
             }
         });
         editButton.addActionListener(new ActionListener() {
@@ -59,24 +53,28 @@ public class AddressBook extends JFrame {
             }
         });
 
-//        // TO DO: implement listener to open person's data when selected
-//        people.addListSelectionListener(new ListSelectionListener() {
-//            @Override
-//            public void valueChanged(ListSelectionEvent listSelectionEvent) {
-//
-//            }
-//        });
         // TO DO: implement listener to delete the selected person's data
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                int selectedIndex = people.getSelectedIndex();
                 JFrame frame = new JFrame();
 
-                JOptionPane.showConfirmDialog(frame, "Are you sure you want to delete this contact?",
+                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to delete this contact?",
                         "Confirm Deletion",JOptionPane.WARNING_MESSAGE);
 
+                if (result == JOptionPane.OK_OPTION)
+                {
+                    System.out.println(selectedIndex);
+                    if (selectedIndex != -1)
+                    {
+                        ((DefaultListModel) people.getModel()).remove(selectedIndex);
+                        System.out.println("hello");
+                    }
+                }
+
                 //TO DO: Delete the selected contact in the list
+
             }
         });
 
@@ -131,6 +129,7 @@ public class AddressBook extends JFrame {
 
         //Set the model for the JList and update GUI:
         mePane.revalidate();
+        mePane.repaint();
     }
 
     //A, added test input to list:
