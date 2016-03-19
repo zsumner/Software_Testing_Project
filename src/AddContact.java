@@ -31,7 +31,6 @@ public class AddContact extends JFrame implements Runnable{
 
     private String first, last, address, city, state, zipCode, phone;
 
-    AddressBook add = new AddressBook();
     Person person;
     DefaultListModel model;
 
