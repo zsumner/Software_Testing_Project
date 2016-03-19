@@ -38,7 +38,7 @@ public class AddressBook extends JFrame implements Printable {
     static JMenu menu;
     static JMenuItem printButton;
     static JMenuItem saveButton;
-    private JPanel printDialog;
+
 
 
 
@@ -111,11 +111,10 @@ public class AddressBook extends JFrame implements Printable {
                     }
                 }
 
-                //TO DO: Delete the selected contact in the list
+
 
             }
         });
-
 
         sortAZButton.addActionListener(new ActionListener()
         {
@@ -268,20 +267,6 @@ public class AddressBook extends JFrame implements Printable {
 
         }
     }
-
-
-//    public void exitPrintDiag(){
-//        int confirmed = JOptionPane.showConfirmDialog(frame, "Cancel Printing?", "Are you sure?",
-//                JOptionPane.YES_NO_OPTION);
-//
-//        if(confirmed == JOptionPane.YES_OPTION){
-//            frame.dispose();
-//
-//        } else (confirmed == JOptionPane.NO_OPTION){
-//            frame.dispose();
-//        }
-//    }
-
 
 
     public int print(Graphics g, PageFormat pf, int page) throws
