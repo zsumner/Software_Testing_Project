@@ -1,12 +1,11 @@
 import javax.swing.*;
 import javax.swing.text.Position;
+import java.awt.*;
 import java.awt.event.*;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-import java.beans.PropertyChangeListener;
-import javax.print.*;
 import javax.print.attribute.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,7 +18,7 @@ import java.util.logging.Logger;
 /**
  * Created by Zak on 2/26/2016.
  */
-public class AddressBook extends JFrame {
+public class AddressBook extends JFrame implements Printable {
 
     private JList<String> people;
     private JPanel panel1;
@@ -38,6 +37,8 @@ public class AddressBook extends JFrame {
     static JMenuBar menuBar;
     static JMenu menu;
     static JMenuItem printButton;
+    static JMenuItem saveButton;
+    private JPanel printDialog;
 
 
 
@@ -50,7 +51,31 @@ public class AddressBook extends JFrame {
         model = new DefaultListModel<>();
         people.setModel(model);
 
+        printButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
 
+                PrinterJob job = PrinterJob.getPrinterJob();
+                PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
+                PageFormat pf = job.pageDialog(aset);
+                job.setPrintable(new AddressBook(), pf);
+                boolean ok = job.printDialog(aset);
+                if (ok) {
+                    try {
+                        job.print(aset);
+                    } catch (PrinterException ex) {
+             /* The job did not successfully complete */
+                    }
+                }
+            }
+        });
+
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                saveDialog();
+            }
+        });
 
         createButton.addActionListener(new ActionListener() {
             @Override
@@ -102,27 +127,9 @@ public class AddressBook extends JFrame {
         });
 
 
-        // Z, window listener when user goes to close the window
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent windowEvent) {
-                exit();
-            }
-        });
+
     }
 
-    public static JMenuBar createMenuBar(){
-        //Create the menuBar
-        menuBar = new JMenuBar();
-
-        //Build the first menu
-        menu = new JMenu("File");
-        printButton = new JMenuItem("Print");
-        menu.add(printButton);
-        menuBar.add(menu);
-
-        return menuBar;
-    }
 
     public static void main(String[] args) {
 
@@ -138,21 +145,44 @@ public class AddressBook extends JFrame {
             Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+
+
+
         // Frame creation
         frame = new JFrame("Address Book");
 
+
         // Frame properties
-        frame.setContentPane(new AddressBook().panel1);
-//        frame.setDefaultCloseOperation();
+        frame.setJMenuBar(createMenuBar());
+       frame.setContentPane(new AddressBook().panel1);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
         frame.setSize(800, 600);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
-        frame.setJMenuBar(createMenuBar());
+
     }
 
-    //A, Generated listmodel to store string data from contacts (only testing names now):
+    //Z, create menu bar that includes print option
+    public static JMenuBar createMenuBar(){
+        //Create the menuBar
+        menuBar = new JMenuBar();
+
+        //Build the first menu
+        menu = new JMenu("File");
+        printButton = new JMenuItem("Print");
+        //Add print menu option
+        menu.add(printButton);
+        //Add save menu option
+        saveButton = new JMenuItem("Save List");
+        menu.add(saveButton);
+        menuBar.add(menu);
+
+
+
+        return menuBar;
+    }
 
     //A, Read the in method comments:
     public void UpdateJList(String first, String last){
@@ -204,7 +234,7 @@ public class AddressBook extends JFrame {
 
     }
 
-    // TO DO:
+    // TO DO: Sort contact alphabetically
     public void sortAZ(ArrayList<String> person) {
         Collections.sort(person);
         for(String p : this.person){
@@ -214,7 +244,7 @@ public class AddressBook extends JFrame {
         people.updateUI();
     }
 
-    // TO DO:
+    // TO DO: Sort contact alphabetically reverse
     public void sortZA() {
         Collections.reverse(person);
         for(String p : person){
@@ -224,29 +254,55 @@ public class AddressBook extends JFrame {
         people.updateUI();
     }
 
-    // TO DO:
+    // TO DO: Sort contact by zipcode numerical order
     public void sortZip() {
     }
 
     // Z, used to verify the user to save current state of the program
-    void exit(){
+    public void saveDialog(){
         int confirmed = JOptionPane.showConfirmDialog(frame, "Would you like to save your contacts?", "Save",
                 JOptionPane.YES_NO_OPTION);
 
         if(confirmed == JOptionPane.YES_OPTION){
-            frame.dispose();
-        } else if(confirmed == JOptionPane.NO_OPTION){
-            frame.dispose();
-        } else {
+           JOptionPane.showMessageDialog(frame, "Contacts saved!", "Success!" ,JOptionPane.INFORMATION_MESSAGE);
 
         }
-
-
     }
 
 
+//    public void exitPrintDiag(){
+//        int confirmed = JOptionPane.showConfirmDialog(frame, "Cancel Printing?", "Are you sure?",
+//                JOptionPane.YES_NO_OPTION);
+//
+//        if(confirmed == JOptionPane.YES_OPTION){
+//            frame.dispose();
+//
+//        } else (confirmed == JOptionPane.NO_OPTION){
+//            frame.dispose();
+//        }
+//    }
 
 
+
+    public int print(Graphics g, PageFormat pf, int page) throws
+            PrinterException {
+
+        if (page > 0) { /* We have only one page, and 'page' is zero-based */
+            return NO_SUCH_PAGE;
+        }
+
+        /* User (0,0) is typically outside the imageable area, so we must
+         * translate by the X and Y values in the PageFormat to avoid clipping
+         */
+        Graphics2D g2d = (Graphics2D)g;
+        g2d.translate(pf.getImageableX(), pf.getImageableY());
+
+        /* Now we perform our rendering */
+        g.drawString("Test the print dialog!", 100, 100);
+
+        /* tell the caller that this page is part of the printed document */
+        return PAGE_EXISTS;
+    }
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
