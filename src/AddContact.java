@@ -41,67 +41,7 @@ public class AddContact extends JFrame implements Runnable{
     public AddContact(DefaultListModel<String> model, JScrollPane mePane){
         this.model = model;
         this.mePane = mePane;
-        // Create JFrame
-//        final JFrame contactForm = new JFrame();
-//
-//        // Set Attributes
-//        contactForm.setTitle("Add New Contact");
-//        contactForm.setContentPane(contactPane);
-//        contactForm.setVisible(true);
-//        contactForm.pack();
-//        contactForm.setSize(400,350);
-//        contactForm.setLocationRelativeTo(null);
-//        contactForm.setResizable(false);
-//
-//
-//        cancelButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent actionEvent) {
-//                contactForm.dispose();
-//            }
-//        });
-//
-//        saveButton.addActionListener(new ActionListener()
-//        {
-//            @Override
-//            public void actionPerformed(ActionEvent e)
-//            {
-//                first = firstNameField.getText();
-//                last = lastNameField.getText();
-//                address = addressField.getText();
-//                city = cityField.getText();
-//                state = stateSelecter.getSelectedItem().toString();
-//                zipCode = zipField.getText();
-//                phone = phoneField.getText();
-//                city = cityField.getText();
-//
-//
-//                //person = new Person(first, last, address, state, city, zipCode, phone);
-//                giveFirstName();
-//
-//                File file = new File("Contacts.txt");
-//                try
-//                {
-//                    BufferedWriter out = new BufferedWriter(new FileWriter(file));
-//                    out.write(String.format("%-15s", first));
-//                    out.write(String.format("%-15s", last));
-//                    out.write(String.format("%-15s", address));
-//                    out.write(String.format("%-15s", city));
-//                    out.write(String.format("%-15s", state));
-//                    out.write(String.format("%-15s", zipCode));
-//                    out.write(String.format("%-15s", phone));
-//                    out.newLine();
-//                    out.close();
-//                    //@@@@@@@@@@@@@@@@@@@@@ Add these fields to the JList @@@@@@@@@@@@@@@@@@@@@@@@@@
-//                    contactForm.dispose();
-//                }
-//                catch (IOException e1)
-//                {
-//                    e1.printStackTrace();
-//                }
-//                add.UpdateJList(first, last);
-//            }
-//        });
+
     }
 
     public void UpdateJList(String first, String last, String address, String city, String state, String zipCode, String phone){

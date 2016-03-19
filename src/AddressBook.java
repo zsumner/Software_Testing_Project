@@ -1,7 +1,13 @@
 import javax.swing.*;
 import javax.swing.text.Position;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.beans.PropertyChangeListener;
+import javax.print.*;
+import javax.print.attribute.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -28,6 +34,11 @@ public class AddressBook extends JFrame {
     private JScrollPane mePane;
     private JDialog createClassDialog;
     private DefaultListModel<String> model;
+    public static JFrame frame;
+    static JMenuBar menuBar;
+    static JMenu menu;
+    static JMenuItem printButton;
+
 
 
     private ArrayList<String> person = new ArrayList<>();
@@ -38,6 +49,8 @@ public class AddressBook extends JFrame {
 
         model = new DefaultListModel<>();
         people.setModel(model);
+
+
 
         createButton.addActionListener(new ActionListener() {
             @Override
@@ -87,6 +100,28 @@ public class AddressBook extends JFrame {
                 sortAZ(person);
             }
         });
+
+
+        // Z, window listener when user goes to close the window
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                exit();
+            }
+        });
+    }
+
+    public static JMenuBar createMenuBar(){
+        //Create the menuBar
+        menuBar = new JMenuBar();
+
+        //Build the first menu
+        menu = new JMenu("File");
+        printButton = new JMenuItem("Print");
+        menu.add(printButton);
+        menuBar.add(menu);
+
+        return menuBar;
     }
 
     public static void main(String[] args) {
@@ -104,16 +139,17 @@ public class AddressBook extends JFrame {
         }
 
         // Frame creation
-        JFrame frame = new JFrame("Address Book");
+        frame = new JFrame("Address Book");
 
         // Frame properties
         frame.setContentPane(new AddressBook().panel1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setDefaultCloseOperation();
         frame.pack();
         frame.setVisible(true);
         frame.setSize(800, 600);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
+        frame.setJMenuBar(createMenuBar());
     }
 
     //A, Generated listmodel to store string data from contacts (only testing names now):
@@ -191,6 +227,25 @@ public class AddressBook extends JFrame {
     // TO DO:
     public void sortZip() {
     }
+
+    // Z, used to verify the user to save current state of the program
+    void exit(){
+        int confirmed = JOptionPane.showConfirmDialog(frame, "Would you like to save your contacts?", "Save",
+                JOptionPane.YES_NO_OPTION);
+
+        if(confirmed == JOptionPane.YES_OPTION){
+            frame.dispose();
+        } else if(confirmed == JOptionPane.NO_OPTION){
+            frame.dispose();
+        } else {
+
+        }
+
+
+    }
+
+
+
 
 
     private void createUIComponents() {
