@@ -2,13 +2,13 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.util.Formatter;
 import java.util.ArrayList;
 
 /**
  * Created by Zak on 2/26/2016.
  */
-public class AddContact extends JFrame implements Runnable{
+public class AddContact extends JFrame implements Runnable
+{
     private JLabel titleLabel;
     private JTextField firstNameField;
     private JTextField addressField;
@@ -31,24 +31,30 @@ public class AddContact extends JFrame implements Runnable{
 
     private String first, last, address, city, state, zipCode, phone;
 
+    String[] contactArray;
     Person person;
-    DefaultListModel model;
+    DefaultListModel<String> model;
 
-    private ArrayList<String> listPerson = new ArrayList<>();
+    private ArrayList<Person> listPerson = new ArrayList<>();
 
 
-    public AddContact(DefaultListModel<String> model, JScrollPane mePane){
+    public AddContact(DefaultListModel<String> model, JScrollPane mePane)
+    {
         this.model = model;
         this.mePane = mePane;
 
     }
 
-    public void UpdateJList(String first, String last, String address, String city, String state, String zipCode, String phone){
+
+
+    public void UpdateJList(String first, String last, String address, String city, String state, String zipCode, String phone)
+    {
         addToList(first, last, address, city, state, zipCode, phone);
 
         //Populate it:
-        for(String p : listPerson){
-            model.addElement(p);
+        for (Person p : listPerson)
+        {
+            model.addElement(p.toString());
         }
 
         //Set the model for the JList and update GUI:
@@ -57,8 +63,18 @@ public class AddContact extends JFrame implements Runnable{
     }
 
     // TODO: bold variables with string format
-    private void addToList(String first, String last, String address, String city, String state, String zipCode, String phone) {
-        listPerson.add(first + "     " + last + "     " + address + "     " + city + "     " + state + "     " + zipCode + "     " + phone);
+    private void addToList(String first, String last, String address, String city, String state, String zipCode, String phone)
+    {
+        //  listPerson.add(first + "     " + last + "     " + address + "     " + city + "     " + state + "     " + zipCode + "     " + phone);
+        listPerson.add(new Person(first, last, address, city, state, zipCode, phone));
+//        for(String contact : listPerson)
+//        {
+//            contactArray = contact.trim().split("\\s+");
+//            for (String item : contactArray)
+//            {
+//                System.out.println("checking "+ item);
+//            }
+//        }
     }
 
     @Override
@@ -71,14 +87,16 @@ public class AddContact extends JFrame implements Runnable{
         contactForm.setContentPane(contactPane);
         contactForm.setVisible(true);
         contactForm.pack();
-        contactForm.setSize(400,350);
+        contactForm.setSize(400, 350);
         contactForm.setLocationRelativeTo(null);
         contactForm.setResizable(false);
 
 
-        cancelButton.addActionListener(new ActionListener() {
+        cancelButton.addActionListener(new ActionListener()
+        {
             @Override
-            public void actionPerformed(ActionEvent actionEvent) {
+            public void actionPerformed(ActionEvent actionEvent)
+            {
                 contactForm.dispose();
             }
         });
