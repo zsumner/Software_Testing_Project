@@ -38,18 +38,15 @@ public class AddressBook extends JFrame implements Printable {
     static JMenu menu;
     static JMenuItem printButton;
     static JMenuItem saveButton;
-
-
-
+    private int start = 0;
 
     private ArrayList<String> person = new ArrayList<>();
-
-
 
     AddressBook() {
 
         model = new DefaultListModel<>();
         people.setModel(model);
+
 
         printButton.addActionListener(new ActionListener() {
             @Override
@@ -84,10 +81,18 @@ public class AddressBook extends JFrame implements Printable {
                 contactForm.run();
             }
         });
+
         editButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 EditContact editForm = new EditContact();
+            }
+        });
+
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                searchList();
             }
         });
 
@@ -99,29 +104,35 @@ public class AddressBook extends JFrame implements Printable {
                 JFrame frame = new JFrame();
 
                 int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to delete this contact?",
-                        "Confirm Deletion",JOptionPane.WARNING_MESSAGE);
+                        "Confirm Deletion", JOptionPane.WARNING_MESSAGE);
 
-                if (result == JOptionPane.OK_OPTION)
-                {
+                if (result == JOptionPane.OK_OPTION) {
                     System.out.println(selectedIndex);
-                    if (selectedIndex != -1)
-                    {
+                    if (selectedIndex != -1) {
                         ((DefaultListModel) people.getModel()).remove(selectedIndex);
                         System.out.println("hello");
                     }
                 }
 
 
-
             }
         });
 
-        sortAZButton.addActionListener(new ActionListener()
-        {
+        sortAZButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                sortAZ(person);
+            public void actionPerformed(ActionEvent e) {
+                addToList(start);
+                sortAZ();
+                start = model.getSize();
+            }
+        });
+
+        sortZAButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                addToList(start);
+                sortZA();
+                start = model.getSize();
             }
         });
 
@@ -185,7 +196,7 @@ public class AddressBook extends JFrame implements Printable {
 
     //A, Read the in method comments:
     public void UpdateJList(String first, String last){
-        addToList(first, last);
+        addToList(1);
 
         //Populate it:
         for(String p : person){
@@ -198,8 +209,13 @@ public class AddressBook extends JFrame implements Printable {
     }
 
     //A, added test input to list:
-    private void addToList(String first, String last) {
-        person.add(first + " " + last);
+    private void addToList(int start) {
+        //Populate it:
+        for(int i = start; i < model.getSize(); i++){
+            person.add(model.getElementAt(i));
+        }
+        model.clear();
+
     }
 
     //A, saves the list to a "saveState.txt" file:
@@ -224,8 +240,12 @@ public class AddressBook extends JFrame implements Printable {
     public void searchList(){
         String searchMe = textField1.getText();
         int index = people.getNextMatch(searchMe,0, Position.Bias.Forward);
-        if (index != -1)
-            people.setSelectedValue(searchMe,true);
+        if(index != -1) {
+            textField1.setText(people.getModel().getElementAt(index));
+        }
+        else{
+            textField1.setText("No Results Found...");
+        }
     }
 
     //A, this method gets the array values at the index given by the searchList method:
@@ -234,23 +254,29 @@ public class AddressBook extends JFrame implements Printable {
     }
 
     // TO DO: Sort contact alphabetically
-    public void sortAZ(ArrayList<String> person) {
+    public void sortAZ() {
+        model.clear();
         Collections.sort(person);
-        for(String p : this.person){
+        for(String p : person){
             model.addElement(p);
         }
         //Set the model for the JList and update GUI:
-        people.updateUI();
+        people.revalidate();
+        mePane.revalidate();
+        mePane.repaint();
     }
 
     // TO DO: Sort contact alphabetically reverse
     public void sortZA() {
+        model.clear();
         Collections.reverse(person);
         for(String p : person){
             model.addElement(p);
         }
         //Set the model for the JList and update GUI:
-        people.updateUI();
+        people.revalidate();
+        mePane.revalidate();
+        mePane.repaint();
     }
 
     // TO DO: Sort contact by zipcode numerical order
