@@ -110,7 +110,7 @@ public class AddressBook extends JFrame implements Printable {
                     System.out.println(selectedIndex);
                     if (selectedIndex != -1) {
                         ((DefaultListModel) people.getModel()).remove(selectedIndex);
-                        System.out.println("hello");
+                       // System.out.println("hello");
                     }
                 }
 
@@ -309,7 +309,7 @@ public class AddressBook extends JFrame implements Printable {
         g2d.translate(pf.getImageableX(), pf.getImageableY());
 
         /* Now we perform our rendering */
-        g.drawString("Test the print dialog!", 100, 100);
+        frame.print(g2d);
 
         /* tell the caller that this page is part of the printed document */
         return PAGE_EXISTS;
@@ -318,7 +318,6 @@ public class AddressBook extends JFrame implements Printable {
     private void createUIComponents() {
         // TODO: place custom component creation code here
         people = new JList<String>();
-
         mePane = new JScrollPane(people);
     }
 

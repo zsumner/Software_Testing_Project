@@ -25,7 +25,7 @@ public class PersonTest
     public void testGetFirstName() throws Exception
     {
         person.getFirstName();
-        assertEquals("Johnny", "Johnny");
+        assertEquals("John", "John");
     }
 
     @Test

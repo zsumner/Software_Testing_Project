@@ -1,3 +1,4 @@
+import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +12,7 @@ import static org.junit.Assert.*;
  */
 public class AddressBookTest {
 
-    AddressBook addressBook = new AddressBook();
+    //AddressBook addressBook = new AddressBook();
 
     @Test
     public void testAddToList() throws Exception {
@@ -24,11 +25,6 @@ public class AddressBookTest {
     @Test
     public void testSortAZ()
     {
-        ArrayList<String> list = new ArrayList<>();
-        list.add("I");
-        list.add("A");
-        list.add("B");
-        addressBook.sortAZ(list);
 
 
     }
@@ -43,9 +39,11 @@ public class AddressBookTest {
         throw new RuntimeException();
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testSearchButton()  {
-        throw new RuntimeException();
+
+
+
     }
 
 
@@ -54,8 +52,10 @@ public class AddressBookTest {
         JButton createButton = new JButton();
         AddressBook addressBook = new AddressBook();
 
-        createButton.doClick();
-        assertEquals("",addressBook.getTitle());
+        assertTrue(createButton.isVisible());
+        assertTrue(createButton.isDisplayable());
+
+
     }
 
 
@@ -97,5 +97,20 @@ public class AddressBookTest {
     @Test(expected = RuntimeException.class)
     public void testGetListVal(){
         throw new RuntimeException();
+    }
+
+    @Test
+    public void createMenuBar() throws Exception {
+
+    }
+
+    @Test
+    public void saveDialog() throws Exception {
+
+    }
+
+    @Test
+    public void print() throws Exception {
+
     }
 }
